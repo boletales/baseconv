@@ -14,9 +14,9 @@ import Data.List (isPrefixOf)
 guessBase :: String -> Maybe Base
 guessBase s
   | "0x" `isPrefixOf` nospaceLower s = Just base16BE
-  | isdec s = Just base10
-  | ishex s && any (== ' ') s = Just base16LE
-  | ishex s = Just base16BE
+  | isDec s = Just base10
+  | isHexOrSpace s && any (== ' ') s = Just base16LE
+  | isHexOrSpace s = Just base16BE
   | otherwise = Nothing
 
 data Base = Base
@@ -28,17 +28,17 @@ data Base = Base
 instance Show Base where
   show b = baseName b
 
-isdec :: String -> Bool
-isdec s = all (`elem` ['0'..'9']) s
+isDec :: String -> Bool
+isDec s = all (`elem` ['0'..'9']) s
 
-ishex :: String -> Bool
-ishex s = all (`elem` "0123456789ABCDEFabcdef ") s
+isHexOrSpace :: String -> Bool
+isHexOrSpace s = all (`elem` "0123456789ABCDEFabcdef ") s
 
 
 base10 :: Base
 base10 = Base
   { baseName = "dec"
-  , readBase = \s -> if isdec s then Just (read s) else Nothing
+  , readBase = \s -> if isDec s then Just (read s) else Nothing
   , showBase = pure . show
   }
 
