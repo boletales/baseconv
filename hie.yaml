@@ -1,0 +1,10 @@
+cradle:
+  cabal:
+    - path: "src"
+      component: "lib:baseconv"
+
+    - path: "app/Main.hs"
+      component: "baseconv:exe:base"
+
+    - path: "test"
+      component: "baseconv:test:baseconv-test"
