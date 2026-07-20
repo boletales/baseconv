@@ -1,4 +1,4 @@
-module TestTools where
+module TestTools (red, green, gray, assertEq, testGroup, testSuite) where
 
 import System.Exit (exitFailure)
 
