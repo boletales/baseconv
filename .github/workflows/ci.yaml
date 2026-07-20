@@ -17,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: GHC ${{ matrix.ghc }} on ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
       - name: Set up Haskell
         uses: haskell-actions/setup@v2
@@ -30,14 +30,14 @@ jobs:
           cabal freeze
 
       - name: Cache dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v6
         with:
           path: |
             ~/.cabal/store
             dist-newstyle
           key: ${{ runner.os }}-${{ matrix.ghc }}-cabal-${{ hashFiles('cabal.project.freeze') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.ghc }}-cabal-path
+            ${{ runner.os }}-${{ matrix.ghc }}-cabal
         
       - name: Install Dependencies
         run: cabal build --only-dependencies
